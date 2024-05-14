@@ -257,6 +257,7 @@ class QuestionResponse(Response):
         answer (str): answer to question
         pictures (list[str]): list of links to pictures related to answer
     """
+    question: str = ""
     answer: str = ""
     pictures: list[str] = field(default_factory=list)
 
@@ -264,6 +265,7 @@ class QuestionResponse(Response):
     async def from_request(cls, request: QuestionRequest) -> Self:
         instance = cls()
         answer, links = await get_answer(request.question)
+        instance.question = request.question
         instance.answer = await normalize(answer)
         for picture_link in links:
             instance.pictures.append(f"{DB_PICTURES_PATH}{picture_link}")
