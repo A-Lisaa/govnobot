@@ -250,6 +250,8 @@ async function onSendButtonClick() {
     const inputValue = inputElement.value;
     if (inputValue.length === 0)
         return;
+    inputElement.value = "";
+    createMessage('userMessage', inputValue);
     if (inputValue.trim() === "спасибо" || inputValue.trim() === "спс") {
         createMessage(
             "botMessage",
@@ -274,8 +276,6 @@ async function onSendButtonClick() {
     }
     const input = new InputRequest(inputValue);
     socket.send(JSON.stringify(input));
-    inputElement.value = "";
-    createMessage('userMessage', inputValue);
 }
 
 /**
