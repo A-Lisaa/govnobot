@@ -190,8 +190,9 @@ responses.QuestionResponse = class QuestionResponse extends Response {
      * @param {*} answer answer to question
      * @param {*} pictures list of links to pictures related to answer
      */
-    constructor(answer, pictures) {
+    constructor(question, answer, pictures) {
         super();
+        this.question = question;
         this.answer = answer;
         this.pictures = pictures;
     }
@@ -216,7 +217,7 @@ responses.QuestionResponse = class QuestionResponse extends Response {
     }
 
     getMessage() {
-        let message = this.answer;
+        let message = `Вот что я знаю по вопросу "${this.question}":<br>${this.answer}`;
         for (const pic of this.pictures) {
             message += `<br><img src="${pic}" class="img-fluid"></img>`;
         }
