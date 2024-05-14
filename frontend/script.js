@@ -261,6 +261,17 @@ async function onSendButtonClick() {
         );
         return;
     }
+    if (inputValue.trim() === "привет" || inputValue.trim() === "прив") {
+        createMessage(
+            "botMessage",
+            randomChoice([
+                "Здравствуй, чем я могу помочь?",
+                "Привет, чем тебе помочь?",
+                "Здравствуй, что мне для тебя найти?"
+            ])
+        );
+        return;
+    }
     const input = new InputRequest(inputValue);
     socket.send(JSON.stringify(input));
     inputElement.value = "";
