@@ -252,7 +252,7 @@ async function onSendButtonClick() {
         return;
     inputElement.value = "";
     createMessage('userMessage', inputValue);
-    if (inputValue.trim() === "спасибо" || inputValue.trim() === "спс") {
+    if (inputValue.trim().toLowerCase() === "спасибо" || inputValue.trim().toLowerCase() === "спс") {
         createMessage(
             "botMessage",
             randomChoice([
@@ -263,7 +263,7 @@ async function onSendButtonClick() {
         );
         return;
     }
-    if (inputValue.trim() === "привет" || inputValue.trim() === "прив") {
+    if (inputValue.trim().toLowerCase() === "привет" || inputValue.trim().toLowerCase() === "прив") {
         createMessage(
             "botMessage",
             randomChoice([
