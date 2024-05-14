@@ -244,6 +244,50 @@ function getResponseObject(data) {
 const socket = new WebSocket(webSocketURL);
 
 /**
+ * returns random dialog string from responses if input in respondedWords
+ * @param {*} input user input
+ * @param {*} responsesPairs array of arrays where each element is [respondedWords (words to which to response), responses (response variants)]
+ * @returns random response if found input in respondedWords, null otherwise
+ */
+function getDialogResponse(input, responsesPairs) {
+    input = input.trim().toLowerCase();
+    for (const [respondedWords, responses] of responsesPairs) {
+        if (respondedWords.includes(input)) {
+            return randomChoice(responses);
+        }
+    }
+    return null;
+}
+
+const dialogResponses = [
+    [
+        // thanks response
+        ["спасибо", "спс", "пасиб"],
+        [
+            "Я рада, что помогла тебе",
+            "Надеюсь, я тебе помогла",
+            "Обращайтесь, если возникнут вопросы"
+        ]
+    ],
+    [
+        // greeting response
+        ["здравствуй", "здравствуйте", "здорова", "привет", "прив"],
+        [
+            "Здравствуй, чем я могу помочь?",
+            "Привет, чем тебе помочь?",
+            "Здравствуй, что мне для тебя найти?"
+        ]
+    ],
+    [
+        // goodbye response
+        ["пока", "до свидания"],
+        [
+            "До свидания, буду ждать вас снова"
+        ]
+    ]
+];
+
+/**
  * when send button is clicked
  */
 async function onSendButtonClick() {
@@ -253,28 +297,13 @@ async function onSendButtonClick() {
         return;
     inputElement.value = "";
     createMessage('userMessage', inputValue);
-    if (inputValue.trim().toLowerCase() === "спасибо" || inputValue.trim().toLowerCase() === "спс") {
-        createMessage(
-            "botMessage",
-            randomChoice([
-                "Я рада, что помогла тебе.",
-                "Надеюсь, я тебе помогла.",
-                "Обращайтесь, если возникнут вопросы"
-            ])
-        );
+
+    let dialogResponse = getDialogResponse(inputValue, dialogResponses);
+    if (dialogResponse !== null) {
+        createMessage("botMessage", dialogResponse);
         return;
     }
-    if (inputValue.trim().toLowerCase() === "привет" || inputValue.trim().toLowerCase() === "прив") {
-        createMessage(
-            "botMessage",
-            randomChoice([
-                "Здравствуй, чем я могу помочь?",
-                "Привет, чем тебе помочь?",
-                "Здравствуй, что мне для тебя найти?"
-            ])
-        );
-        return;
-    }
+
     const input = new InputRequest(inputValue);
     socket.send(JSON.stringify(input));
 }
