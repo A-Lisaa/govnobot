@@ -1,3 +1,5 @@
+const webSocketURL = "ws://govnobot-backend.onrender.com/ws";
+
 /**
  * gets random element of array
  *
@@ -238,7 +240,7 @@ function getResponseObject(data) {
 }
 
 // websocket connection
-const socket = new WebSocket("ws://localhost:8000/ws");
+const socket = new WebSocket(webSocketURL);
 
 /**
  * when send button is clicked
