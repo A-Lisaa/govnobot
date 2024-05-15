@@ -1,4 +1,4 @@
-const webSocketURL = "wss://govnobot-backend.onrender.com/ws";
+const webSocketURL = "wss://studentbot-backend.onrender.com/ws";
 
 /**
  * gets random element of array
